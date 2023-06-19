@@ -1,0 +1,44 @@
+version: '3'
+services:
+
+  sti-postgres:
+    image: "postgres:9.6-alpine"
+    container_name: sti-postgres
+    environment:
+      - POSTGRES_DB=spacetours
+      - POSTGRES_USER=stiuser
+      - POSTGRES_PASSWORD=stipass
+
+  propellant-markt-inc-mock:
+    image: "mockserver/mockserver"
+    container_name: propellant-markt-inc-mock
+    ports:
+      - 1080:1080
+    environment:
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/expectations.json
+    volumes:
+      - type: bind
+        source: ./propellant-markt-inc-mock
+        target: /config
+
+  space-tours-inc-backend:
+    build: ./space-tours-inc-backend
+    container_name: space-tours-inc-backend
+    environment:
+      - SPRING_PROFILES_ACTIVE=development
+      - STI_DB_URL=jdbc:postgresql://sti-postgres:5432/spacetours
+      - STI_DB_USERNAME=stiuser
+      - STI_DB_PASSWORD=stipass
+      - STI_PROPELLANT_BASEURI=http://propellant-markt-inc-mock:1080
+    ports:
+      - 8080:8080
+    links:
+      - sti-postgres
+
+  space-tours-inc-frontend:
+    build: ./space-tours-inc-frontend
+    container_name: space-tours-inc-frontend
+    ports:
+      - 4200:80
+    links:
+      - space-tours-inc-backend

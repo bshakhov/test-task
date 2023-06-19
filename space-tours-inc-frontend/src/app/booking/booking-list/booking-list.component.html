@@ -1,0 +1,51 @@
+<mat-form-field class="filter">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Type filter here">
+</mat-form-field>
+
+<button mat-raised-button routerLink="/booking/availability" color="primary">Check Availability</button>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="departureDate">
+    <th mat-header-cell *matHeaderCellDef>Departure Date</th>
+    <td mat-cell *matCellDef="let element">{{element.departureDate}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="passengers">
+    <th mat-header-cell *matHeaderCellDef>Passengers No.</th>
+    <td mat-cell *matCellDef="let element">{{element.passengers}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="travelPackage">
+    <th mat-header-cell *matHeaderCellDef>Travel Package</th>
+    <td mat-cell *matCellDef="let element">{{element.travelPackage?.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lunarCyclerHotelRoom">
+    <th mat-header-cell *matHeaderCellDef>Room on Lunar Cycler</th>
+    <td mat-cell *matCellDef="let element">{{element.travelPackage?.lunarCyclerHotelRoom?.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lunarCyclerHotelNights">
+    <th mat-header-cell *matHeaderCellDef>Nights on Lunar Cycler</th>
+    <td mat-cell *matCellDef="let element">{{element.travelPackage?.lunarCyclerHotelRoomNights}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="orbHotelRoom">
+    <th mat-header-cell *matHeaderCellDef>Room on Moon</th>
+    <td mat-cell *matCellDef="let element">{{element.travelPackage?.orbHotelRoom?.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="orbHotelNights">
+    <th mat-header-cell *matHeaderCellDef>Nights on Moon</th>
+    <td mat-cell *matCellDef="let element">{{element.travelPackage?.orbHotelRoomNights}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data to present</td>
+  </tr>
+</table>

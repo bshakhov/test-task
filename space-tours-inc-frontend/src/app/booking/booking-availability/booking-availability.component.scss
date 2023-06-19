@@ -1,0 +1,26 @@
+.actions {
+  margin-bottom: 16px;
+}
+
+.datepicker {
+  margin-right: 8px;
+}
+
+table {
+  width: 100%;
+
+  & td {
+    &.availability {
+      font-weight: bold;
+
+      &.available {
+        color: green;
+      }
+
+      &.unavailable {
+        color: red;
+      }
+    }
+  }
+}
+

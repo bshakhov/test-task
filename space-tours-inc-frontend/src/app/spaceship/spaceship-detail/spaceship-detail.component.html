@@ -1,0 +1,21 @@
+<div class="detail-section">
+    <p><strong>Service Name: </strong>{{ spaceShip.service.name }}</p>
+    <p><strong>Nombre de la Orbita: </strong>{{ orb?.name }}</p>
+
+    <h4><strong>Dates of next 3 fligths:</strong></h4>
+    <mat-list>    
+        <mat-list-item>
+            <mat-icon mat-list-icon>flight</mat-icon>
+            <div mat-line>{{datesOfNextFlights[0] || "Not Available"}}</div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>flight</mat-icon>
+            <div mat-line>{{datesOfNextFlights[1] || "Not Available"}}</div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon mat-list-icon>flight</mat-icon>
+            <div mat-line>{{datesOfNextFlights[2] || "Not Available"}}</div>
+        </mat-list-item>
+    </mat-list>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+</div>

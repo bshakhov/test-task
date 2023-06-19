@@ -1,0 +1,97 @@
+[
+  {
+    "httpRequest": {
+      "path": "/propellants"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },      
+      "body": [
+            {
+                "id": 1, 
+                "name": "LOX/RP-1"
+            }, 
+            {
+                "id": 2, 
+                "name": "LOX/LH2"
+            },
+            {
+                "id": 3,
+                "name": "NTO/Aerozine 50"
+            }
+        ]
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/propellants/1"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },      
+      "body": {
+            "id": 1,
+            "name": "LOX/RP-1",
+            "baseUnit": "kg",
+            "price": 0.202,
+            "thrust": {
+                "carryCapacity": {
+                    "amount": 0.5, 
+                    "unit": "kg"
+                }
+            }
+        }
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/propellants/2"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },      
+      "body": {
+            "id": 2,
+            "name": "LOX/LH2",
+            "baseUnit": "kg",
+            "price": 0.173,
+            "thrust": {
+                "carryCapacity": {
+                    "amount": 0.3, 
+                    "unit": "kg"
+                }
+            }
+        }
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/propellants/3"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers" : {
+        "Content-Type" : [ "application/json" ]
+      },      
+      "body": {
+        "id": 3,
+        "name": "NTO/Aerozine 50",
+        "baseUnit": "kg",
+        "price": 0.486,
+        "thrust": {
+            "carryCapacity": {
+                "amount": 0.8, 
+                "unit": "kg"
+            }
+        }
+    }
+}
+  }
+
+]
