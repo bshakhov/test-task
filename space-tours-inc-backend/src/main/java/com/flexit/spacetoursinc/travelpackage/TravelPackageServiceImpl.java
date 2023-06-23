@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.flexit.spacetoursinc.common.exception.BusinessErrorMessage.AVAILABILITY_DATE_IN_THE_PAST;
+import static com.flexit.spacetoursinc.common.exception.BusinessErrorMessage.PROPELLANT_FOR_SPACESHIP_NOT_FOUND;
+
 @Service
 @Transactional
 public class TravelPackageServiceImpl extends BaseServiceImpl<TravelPackage, TravelPackageVo> implements TravelPackageService {
@@ -40,6 +43,7 @@ public class TravelPackageServiceImpl extends BaseServiceImpl<TravelPackage, Tra
     @Nonnull
     @Override
     public List<TravelPackageAvailabilityVo> getAvailabilitiesByDate(LocalDate checkAvailabilityDate) {
+        checkAvailabilityDateOrThrow(checkAvailabilityDate);
         List<TravelPackageVo> travelPackages = findAll();
         List<BookingVo> bookings = bookingService.findByDepartureDateBetween(
                 Date.valueOf(checkAvailabilityDate.minusDays(DAYS_TO_LOOKUP_OFFSET)),
@@ -54,6 +58,12 @@ public class TravelPackageServiceImpl extends BaseServiceImpl<TravelPackage, Tra
                         countAvailableTicketsForTravelPackage(checkAvailabilityDate, travelPackage, bookings),
                         getPrice(travelPackage, propellants)))
                 .collect(Collectors.toList());
+    }
+
+    private void checkAvailabilityDateOrThrow(LocalDate checkAvailabilityDate) {
+        if (checkAvailabilityDate.isBefore(LocalDate.now())) {
+            throw new StiBusinessException(AVAILABILITY_DATE_IN_THE_PAST.getErrorMessage());
+        }
     }
 
     private Integer countAvailableTicketsForTravelPackage(LocalDate checkAvailabilityDate, TravelPackageVo travelPackage,
@@ -121,7 +131,7 @@ public class TravelPackageServiceImpl extends BaseServiceImpl<TravelPackage, Tra
         PropellantVo propellant = propellants.stream()
                 .filter(p -> p.getId().equals(spaceship.getPropellantId()))
                 .findFirst()
-                .orElseThrow(() -> new StiBusinessException("Propellant for spaceship not found"));
+                .orElseThrow(() -> new StiBusinessException(PROPELLANT_FOR_SPACESHIP_NOT_FOUND.getErrorMessage()));
 
         double propellantKg = spaceship.getCarriedWeight() / propellant.getThrust().getCarryCapacity().getAmount();
         double propellantCost = propellantKg * propellant.getPrice();

@@ -2,6 +2,7 @@ package com.flexit.spacetoursinc.travelpackage;
 
 import com.flexit.spacetoursinc.booking.BookingService;
 import com.flexit.spacetoursinc.booking.BookingVo;
+import com.flexit.spacetoursinc.common.exception.StiBusinessException;
 import com.flexit.spacetoursinc.hotelroom.HotelRoomVo;
 import com.flexit.spacetoursinc.propellants.PropellantCarryCapacityVo;
 import com.flexit.spacetoursinc.propellants.PropellantService;
@@ -23,13 +24,15 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @DisplayName("TravelPackageService")
 class TravelPackageServiceTests {
 
-    private static final Date TEST_DATE = Date.valueOf("2021-01-01");
+    private static final Date TEST_DATE = Date.valueOf("2023-09-09");
+    private static final Date TEST_DATE_IN_THE_PAST = Date.valueOf("2021-09-09");
 
     @InjectMocks
     TravelPackageServiceImpl service;
@@ -134,6 +137,13 @@ class TravelPackageServiceTests {
     @Nested
     @DisplayName("#getAvailabilitiesByDate")
     class GetAvailabilitiesByDate {
+
+        @Test
+        @DisplayName("should throw an error when provide date in the past")
+        public void shouldThrowErrorWithDateInThePast() {
+            assertThrows(StiBusinessException.class,
+                    () -> service.getAvailabilitiesByDate(TEST_DATE_IN_THE_PAST.toLocalDate()));
+        }
 
         @Test
         @DisplayName("should get availabilities by date")

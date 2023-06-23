@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.flexit.spacetoursinc.common.exception.BusinessErrorMessage.FETCHING_LIST_OF_PROPELLANTS;
+import static com.flexit.spacetoursinc.common.exception.BusinessErrorMessage.FETCHING_SINGLE_PROPELLANT;
+
 @Service
 public class PropellantServiceImpl implements PropellantService {
 
@@ -21,13 +24,13 @@ public class PropellantServiceImpl implements PropellantService {
     @Override
     public List<PropellantListItemVo> findAll() {
         return Optional.ofNullable(this.propellantClient.getAllPropellants())
-                .orElseThrow(() -> new StiBusinessException("Error fetching list of propellants"));
+                .orElseThrow(() -> new StiBusinessException(FETCHING_LIST_OF_PROPELLANTS.getErrorMessage()));
     }
 
     @Override
     public PropellantVo findById(Integer id) {
         return Optional.ofNullable(this.propellantClient.getPropellant(id))
-                .orElseThrow(() -> new StiBusinessException("Error fetching a single propellant"));
+                .orElseThrow(() -> new StiBusinessException(FETCHING_SINGLE_PROPELLANT.getErrorMessage()));
     }
 
     @Override
