@@ -1,14 +1,15 @@
 package com.flexit.spacetoursinc.travelpackage;
 
-import com.flexit.spacetoursinc.booking.BookingService;
-import com.flexit.spacetoursinc.booking.BookingVo;
+import com.flexit.spacetoursinc.api.dto.*;
+import com.flexit.spacetoursinc.converter.TravelPackageConverter;
+import com.flexit.spacetoursinc.dao.repository.TravelPackageRepository;
+import com.flexit.spacetoursinc.service.BookingService;
 import com.flexit.spacetoursinc.common.exception.StiBusinessException;
-import com.flexit.spacetoursinc.hotelroom.HotelRoomVo;
-import com.flexit.spacetoursinc.propellants.PropellantCarryCapacityVo;
-import com.flexit.spacetoursinc.propellants.PropellantService;
-import com.flexit.spacetoursinc.propellants.PropellantThrustVo;
-import com.flexit.spacetoursinc.propellants.PropellantVo;
-import com.flexit.spacetoursinc.spaceship.SpaceshipVo;
+import com.flexit.spacetoursinc.api.dto.PropellantCarryCapacityVo;
+import com.flexit.spacetoursinc.service.PropellantService;
+import com.flexit.spacetoursinc.api.dto.PropellantThrustVo;
+import com.flexit.spacetoursinc.api.dto.PropellantVo;
+import com.flexit.spacetoursinc.service.impl.TravelPackageServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
