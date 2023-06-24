@@ -13,6 +13,7 @@ export class BookingAvailabilityComponent implements OnInit {
 
   isLoading: boolean;
   date: string;
+  currentDate: Date = new Date();
 
   displayedColumns: string[] = ['travelPackage', 'totalTickets', 'isAvailable', 'availableTicketsCount', 'price'];
   dataSource = new MatTableDataSource<TravelPackageAvailability>([]);
